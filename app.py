@@ -56,5 +56,4 @@ def performace_based_recommendation():
     return mf_perform.performance_based_recommendation(mf_category,mf_sub_category,risk,top_n,load_cache)
 
 if __name__=='__main__':    
-    # print(predict('LUPIN',30))
     app.run(host='0.0.0.0',port=8000,debug=False)

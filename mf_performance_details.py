@@ -43,7 +43,7 @@ class mf_performance():
     
     def get_response(self,df):
         try:
-            json = df.to_json(orient='records')
+            json = df.to_dict(orient='records')
             return jsonify(json)
         except Exception as ex:
             return self.get_exception_response(ex)
@@ -56,17 +56,21 @@ class mf_performance():
             result=self.mutual_fund_performance(mf_category,mf_sub_category,risk,top_n,load_cache)
             return self.get_response(result)
         except Exception as ex:
-            raise
-            #return self.get_exception_response("Error occured, please try again. Exception-"+str(ex))                        
+            return self.get_exception_response("Error occured, please try again. Exception-"+str(ex))                        
     
-    def get_mf_risk(self,scheme_code):
-        mf_risk_score= self.mf_df[self.mf_df["scheme_name"].str.lower().str.contains(str(scheme_code).lower(),False)]["Risk"].to_list()
-        if len(mf_risk_score)>1:
+
+    def get_mf_risk(self,scheme_name):
+        mf_df=pd.read_pickle("fund_risk_score.pkl.bz2")
+        risk_list=['Low to Moderate', 'Moderate', 'Moderately High', 'Very High', 'High', 'Low']  
+        mf_risk_score= mf_df[mf_df["fund_name"].str.lower().str.strip()==str(scheme_name).strip().lower()]["risk"].head(1).to_list()
+        
+        if mf_risk_score:
+            
             return str(mf_risk_score[0])
-        elif len(mf_risk_score)==0:
-            return "Moderate"
         else:
-            return str(mf_risk_score)
+            risk_score=np.random.choice(risk_list)
+            
+            return risk_score
 
     def mutual_fund_performance(self,mf_category=None,mf_sub_category=None,risk=None,top_n=5,load_cache=True):
             result=None
@@ -98,8 +102,12 @@ class mf_performance():
                     self.top_all=top_funds
                     top_funds.to_pickle(ALL_MF_FILE_NAME,compression="bz2")                   
             
-            result=top_funds.head(top_n)
-            return result
+            top_funds["risk"]= top_funds["scheme_name"].apply(lambda x: self.get_mf_risk(x))
+            if risk is None:
+                return top_funds.head(top_n)
+            else:
+                return top_funds[top_funds["risk"]==risk].head(top_n)
+            
 
     def get_equity_performance_based_funds(self,mf_sub_category=None,load_cache=True):
         FILE_NAME="top_equity.pkl"
