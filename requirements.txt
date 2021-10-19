@@ -9,4 +9,4 @@ flask
 flasgger
 sklearn
 mftool
-tflite==2.6.0
+keras
