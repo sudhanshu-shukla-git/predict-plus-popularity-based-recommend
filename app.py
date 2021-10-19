@@ -1,5 +1,6 @@
 from mf_performance_details import mf_performance
 from mf_popularity_details import mf_popularity
+from user_content_based_mf import content_based_recommend
 from user_scoring_model import user_score
 from flask import Flask,jsonify,request
 # from flasgger import Swagger
@@ -41,11 +42,22 @@ def popularity_based_recommendation():
     mf_popular=mf_popularity()
     return mf_popular.performance_based_recommendation(mf_category)
 
+
 @app.route('/user_score', methods=['POST'])
-def get_user_score():
+def user_score_details():
   data = request.get_json()
   
   score=user_score()
   return score.get_scoring_result(data)
+
+
+@app.route('/content_based', methods=['POST'])
+def content_based_mf_recommend():
+  data = request.get_json()
+  
+  content_recommend=content_based_recommend()
+  return content_recommend.content_based_recommendation(data)
+
+
 if __name__=='__main__':    
     app.run(host='0.0.0.0',port=8000,debug=False)

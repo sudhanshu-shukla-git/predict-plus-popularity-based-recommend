@@ -9,4 +9,4 @@ flask
 flasgger
 sklearn
 mftool
-tensorflow==1.0.1
+keras

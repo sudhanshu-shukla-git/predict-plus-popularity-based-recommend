@@ -79,7 +79,7 @@ class mf_popularity():
         for fund in fund_names:
             df_perf=self.mf_perf.get_mf_details(fund,mf_category,mf_sub_category,risk,top_n,load_cache)
             df_list.append(df_perf)
-        final_df=pd.concat(df_list)
+        
         final_df=pd.concat(df_list).reset_index(drop=True)
     
         return final_df

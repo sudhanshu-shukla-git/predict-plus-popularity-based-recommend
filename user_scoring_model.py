@@ -1,12 +1,11 @@
 
-import tensorflow as tf
+import keras
 import pandas as pd
-from tensorflow.keras.models import load_model
+from keras.models import load_model
 import pickle
 from sklearn.preprocessing import MinMaxScaler
 from flask import jsonify
 from flask import request, make_response,Response
-from tensorflow.keras.initializers import glorot_uniform
 import numpy as np
 import warnings
 import json 
@@ -71,7 +70,7 @@ class user_score():
         with open("models\model_user_score.json", 'r') as json_file:
             json_savedModel= json_file.read()
         #load the model architecture 
-        model = tf.keras.models.model_from_json(json_savedModel)    
+        model = keras.models.model_from_json(json_savedModel)    
         model.load_weights("models\Weights-048--21.52199.hdf5") # load it
         model.compile(loss='mean_absolute_error', optimizer='adam', metrics=['mean_absolute_error'])    
         
