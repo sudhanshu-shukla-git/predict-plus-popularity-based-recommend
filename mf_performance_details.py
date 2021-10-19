@@ -97,8 +97,9 @@ class mf_performance():
                     
                     self.top_all=top_funds
                     top_funds.to_pickle(ALL_MF_FILE_NAME,compression="bz2")                   
-                
-            return top_funds.head(top_n)
+            
+            result=top_funds.head(top_n)
+            return result
 
     def get_equity_performance_based_funds(self,mf_sub_category=None,load_cache=True):
         FILE_NAME="top_equity.pkl"
