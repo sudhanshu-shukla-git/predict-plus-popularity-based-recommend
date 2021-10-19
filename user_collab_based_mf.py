@@ -98,7 +98,7 @@ class collab_based_recommend():
 
     def mf_details(self,funds):
         print("mf_details")
-        mf_df=pd.read_pickle("mf_data_popular.pkl.bz2",compression="bz2")
+        mf_df=pd.read_pickle("pickle_data/mf_data_popular.pkl.bz2",compression="bz2")
         funds_details=mf_df[mf_df["scheme_code"].isin(funds)]
         funds_details=list(set(funds_details["fund_name"].values))[:5]
         final_df=self.get_performance_data(funds_details)

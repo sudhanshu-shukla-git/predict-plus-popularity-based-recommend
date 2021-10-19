@@ -10,7 +10,7 @@ from flask import request, make_response,Response
 class content_based_recommend():
 
     def __init__(self):
-        self.MODEL_NAME="models\content_based_recommendar_model.h5"
+        self.MODEL_NAME="models/content_based_recommendar_model.h5"
         self.MF_OUTPUT_MAPPING="pickle_data/mf_output_mapping.pkl.bz2"
         self.MF_FILE_NAME="pickle_data/mf_data_popular.pkl.bz2"
         self.mf_perf=mf_performance()

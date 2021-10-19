@@ -67,18 +67,18 @@ class user_score():
     def get_user_score(self,user_data):
         
         #Reading the model from JSON file
-        with open("models\model_user_score.json", 'r') as json_file:
+        with open("models/model_user_score.json", 'r') as json_file:
             json_savedModel= json_file.read()
         #load the model architecture 
         model = tf.keras.models.model_from_json(json_savedModel)    
-        model.load_weights("models\Weights-048--21.52199.hdf5") # load it
+        model.load_weights("models/Weights-048--21.52199.hdf5") # load it
         model.compile(loss='mean_absolute_error', optimizer='adam', metrics=['mean_absolute_error'])    
         
         predictions = int(model.predict(user_data))
         return predictions
 
     def get_improvement_prediction(self,user_data):
-        IMPROVEMENT_MODEL="models\improvement_nn_model.h5"
+        IMPROVEMENT_MODEL="models/improvement_nn_model.h5"
         model = load_model(IMPROVEMENT_MODEL, compile = False)        
         predictions = model.predict(user_data)
         top_2=(-predictions.ravel()).argsort()[:2]
