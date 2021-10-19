@@ -21,6 +21,10 @@ class mf_performance():
         self.top_other=None
         self.mf_perform_data=None
         self.top_all=None
+        self.default_result=pd.DataFrame(columns=['scheme_name', 'benchmark', 'latest NAV- Regular', 'latest NAV- Direct',\
+       '1-Year Return(%)- Regular', '1-Year Return(%)- Direct',\
+       '3-Year Return(%)- Regular', '3-Year Return(%)- Direct',\
+       '5-Year Return(%)- Regular', '5-Year Return(%)- Direct'])
     
     def flatten(self,t):
         return [item for sublist in t for item in sublist]
@@ -40,7 +44,7 @@ class mf_performance():
     def get_response(self,df):
         try:
             json = df.to_json(orient='records')
-            return Response(json, mimetype='application/json')
+            return jsonify(json)
         except Exception as ex:
             return self.get_exception_response(ex)
     
@@ -52,7 +56,8 @@ class mf_performance():
             result=self.mutual_fund_performance(mf_category,mf_sub_category,risk,top_n,load_cache)
             return self.get_response(result)
         except Exception as ex:
-            return self.get_exception_response("Error occured, please try again. Exception-"+str(ex))                        
+            raise
+            #return self.get_exception_response("Error occured, please try again. Exception-"+str(ex))                        
     
     def get_mf_risk(self,scheme_code):
         mf_risk_score= self.mf_df[self.mf_df["scheme_name"].str.lower().str.contains(str(scheme_code).lower(),False)]["Risk"].to_list()
@@ -80,19 +85,20 @@ class mf_performance():
                 if load_cache:
                     if self.top_all is None:                        
                         if exists(ALL_MF_FILE_NAME):
-                            self.top_all= pd.read_pickle(ALL_MF_FILE_NAME,compression="bz2") 
-                        
-                top_funds1=self.get_equity_performance_based_funds(mf_sub_category,load_cache)
-                top_funds2=self.get_debt_performance_based_funds(mf_sub_category,load_cache)
-                top_funds3=self.get_hybrid_performance_based_funds(mf_sub_category,load_cache)
-                top_funds4=self.get_soln_performance_based_funds(mf_sub_category,load_cache)  
-                top_funds5=self.get_soln_performance_based_funds(mf_sub_category,load_cache)
-                top_funds= pd.concat([top_funds1,top_funds2,top_funds3,top_funds4,top_funds5])
+                            self.top_all= pd.read_pickle(ALL_MF_FILE_NAME,compression="bz2")
+                            top_funds=self.top_all 
+                else:        
+                    top_funds1=self.get_equity_performance_based_funds(mf_sub_category,load_cache)
+                    top_funds2=self.get_debt_performance_based_funds(mf_sub_category,load_cache)
+                    top_funds3=self.get_hybrid_performance_based_funds(mf_sub_category,load_cache)
+                    top_funds4=self.get_soln_performance_based_funds(mf_sub_category,load_cache)  
+                    top_funds5=self.get_other_performance_based_funds(mf_sub_category,load_cache)
+                    top_funds= pd.concat([top_funds1,top_funds2,top_funds3,top_funds4,top_funds5])
+                    
+                    self.top_all=top_funds
+                    top_funds.to_pickle(ALL_MF_FILE_NAME,compression="bz2")                   
                 
-                self.top_all=top_funds
-                top_funds.to_pickle(ALL_MF_FILE_NAME,compression="bz2")                   
-            
-            return top_funds
+            return top_funds.head(top_n)
 
     def get_equity_performance_based_funds(self,mf_sub_category=None,load_cache=True):
         FILE_NAME="top_equity.pkl"
@@ -103,13 +109,17 @@ class mf_performance():
                     if exists(FILE_NAME):
                         self.top_equity= self.load_dict(FILE_NAME)
                 else:
-                    self.top_equity=obj.get_open_ended_equity_scheme_performance(as_json=False)
+                    self.top_equity=self.mf.get_open_ended_equity_scheme_performance(as_json=False)
                     self.save_dict(self.top_equity,FILE_NAME)            
             except Exception as ex:
                 if exists(FILE_NAME):
                     self.top_equity= self.load_dict(FILE_NAME)
                 else:
                     print("Network Error")
+                    
+        if self.top_equity is None:
+            return self.default_result
+
         if mf_sub_category is None:
             return pd.DataFrame(self.flatten(list(self.top_equity.values())))
         else:
@@ -124,13 +134,15 @@ class mf_performance():
                     if exists(FILE_NAME):
                         self.top_debt= self.load_dict(FILE_NAME)
                 else:
-                    self.top_debt=obj.get_open_ended_debt_scheme_performance(as_json=False)
+                    self.top_debt=self.mf.get_open_ended_debt_scheme_performance(as_json=False)
                     self.save_dict(self.top_debt,FILE_NAME)                     
             except Exception as ex:
                 if exists(FILE_NAME):
                     self.top_debt= self.load_dict(FILE_NAME)
                 else:
                     print("Network Error")
+        if self.top_debt is None:
+            return self.default_result
         if mf_sub_category is None:
             return pd.DataFrame(self.flatten(list(self.top_debt.values())))
         else:
@@ -146,13 +158,16 @@ class mf_performance():
                     if exists(FILE_NAME):
                         self.top_hybrid= self.load_dict(FILE_NAME)
                 else:
-                    self.top_hybrid=obj.get_open_ended_hybrid_scheme_performance(as_json=False)
+                    self.top_hybrid=self.mf.get_open_ended_hybrid_scheme_performance(as_json=False)
                     self.save_dict(self.top_hybrid,FILE_NAME)             
             except Exception as ex:
                 if exists(FILE_NAME):
                     self.top_hybrid= self.load_dict(FILE_NAME)
                 else:
                     print("Network Error")
+        if self.top_hybrid is None:
+            return self.default_result
+
         if mf_sub_category is None:            
             for key in list(self.top_hybrid.keys()):
                 if "The underlying data is unavailable for Today" in self.top_hybrid[key]:
@@ -164,20 +179,24 @@ class mf_performance():
 
     def get_soln_performance_based_funds(self,mf_sub_category=None,load_cache=True):
         FILE_NAME="top_soln.pkl"
-
+        
         if self.top_soln is None:
             try: 
+                
                 if load_cache:
+                    
                     if exists(FILE_NAME):
                         self.top_soln= self.load_dict(FILE_NAME)
                 else:
-                    top_soln=obj.get_open_ended_debt_scheme_performance(as_json=False)
+                    self.top_soln=self.mf.get_open_ended_solution_scheme_performance(as_json=False)
                     self.save_dict(self.top_soln,FILE_NAME)        
             except Exception as ex:
                 if exists(FILE_NAME):
                     self.top_soln= self.load_dict(FILE_NAME)
                 else:
                     print("Network Error")
+        if self.top_soln is None:
+            return self.default_result
         if mf_sub_category is None:                
             return pd.DataFrame(self.flatten(list(self.top_soln.values())))
         else:
@@ -193,7 +212,7 @@ class mf_performance():
                     if exists(FILE_NAME):
                         self.top_other= self.load_dict(FILE_NAME)
                 else:
-                    self.top_other=obj.get_open_ended_other_scheme_performance(as_json=False)
+                    self.top_other=self.mf.get_open_ended_other_scheme_performance(as_json=False)
                     self.save_dict(self.top_other,FILE_NAME)            
             except Exception as ex:
                 if exists(FILE_NAME):
