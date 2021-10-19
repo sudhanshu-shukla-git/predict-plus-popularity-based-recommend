@@ -13,6 +13,7 @@ def welcome():
 @app.route('/predict',methods=["Get"])
 def popularity_based_recommendation():
     mf_perform=mf_performance()
+    #load_cache
     return mf_perform.performance_based_recommendation(load_cache=False)
 
 if __name__=='__main__':    
