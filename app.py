@@ -13,7 +13,7 @@ def welcome():
 @app.route('/predict',methods=["Get"])
 def popularity_based_recommendation():
     mf_perform=mf_performance()
-    return mf_perform.performance_based_recommendation()
+    return mf_perform.performance_based_recommendation(load_cache=False)
 
 if __name__=='__main__':    
     # print(predict('LUPIN',30))
