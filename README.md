@@ -8,7 +8,7 @@
 > 
 > #### Sample Request : https://predict-plus-recommender.herokuapp.com/performance_based?mf_category=Debt%20Scheme&mf_sub_category=Liquid&risk=Moderate&top_n=5&load_cache=False
 > #### Method: GET
-> #### Allowed Values : 
+> #### Allowed Values : [mf_category_and_sub_category](reference_data\mf_category_and_sub_category.csv), [risk_types](reference_data\risk_types.csv)
 > #### Sample Result: 
 > 
 > ```json
@@ -26,7 +26,8 @@
 > ``` json
 > {"mf_category": "Debt Scheme", "mf_sub_category": "Liquid", "risk": "Moderate", "top_n": 5, "load_cache": "False", "user_mf_data": [{"member_id": 1192831, "mf_id": 144587}, {"member_id": 791766, "mf_id": 142589}, {"member_id": 906393, "mf_id": 117974}, {"member_id": 1044569, "mf_id": 139949}, {"member_id": 254710, "mf_id": 133174}, {"member_id": 1040627, "mf_id": 112495}, {"member_id": 826908, "mf_id": 109831}, {"member_id": 668840, "mf_id": 118317}, {"member_id": 615728, "mf_id": 140874}, {"member_id": 549918, "mf_id": 143504}, {"member_id": 824662, "mf_id": 143159}, {"member_id": 1269741, "mf_id": 142144}, {"member_id": 888956, "mf_id": 143154}, {"member_id": 1035551, "mf_id": 148563}, {"member_id": 855725, "mf_id": 134410}, {"member_id": 919753, "mf_id": 135973}, {"member_id": 998063, "mf_id": 148656}, {"member_id": 1271576, "mf_id": 105559}, {"member_id": 1051800, "mf_id": 128612}, {"member_id": 855725, "mf_id": 129147}, {"member_id": 1247371, "mf_id": 130145}, {"member_id": 350763, "mf_id": 148516}, {"member_id": 1073920, "mf_id": 129021}, {"member_id": 999126, "mf_id": 139761}, {"member_id": 1026182, "mf_id": 128781}, {"member_id": 734013, "mf_id": 145340}, {"member_id": 928336, "mf_id": 112718}, {"member_id": 804940, "mf_id": 147377}, {"member_id": 766849, "mf_id": 118429}, {"member_id": 513879, "mf_id": 130169}, {"member_id": 776031, "mf_id": 119565}]}
 > ```
-> #### Allowed Values : 
+#### Allowed Values : [mf_category_and_sub_category](reference_data\mf_category_and_sub_category.csv), [risk_types](reference_data\risk_types.csv), [user_mf_data](reference_data\user_mf_data.csv)
+
 > #### Sample Result: 
 > 
 > ```json
