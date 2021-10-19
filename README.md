@@ -1,4 +1,4 @@
-# predict-plus
+# Predict Plus
 ## APIs
 
 ### Performance Based
