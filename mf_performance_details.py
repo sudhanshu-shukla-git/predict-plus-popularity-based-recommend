@@ -257,4 +257,5 @@ class mf_performance():
         
         if selected_ratio>-1:
             result=self.mf_perform_data[self.mf_perform_data["scheme_name"]==selected_mf].drop_duplicates()
+            
         return result

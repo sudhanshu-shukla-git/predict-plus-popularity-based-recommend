@@ -26,22 +26,29 @@ def performace_based_recommendation():
     mf_perform=mf_performance()
     return mf_perform.performance_based_recommendation(mf_category,mf_sub_category,risk,top_n,load_cache)
 
-@app.route('/popularity_based',methods=["GET"])
+@app.route('/popularity_based',methods=["GET","POST"])
 def popularity_based_recommendation():
-    
-    mf_category=request.args.get("mf_category")
-    mf_sub_category=request.args.get("mf_sub_category")
-    risk=request.args.get("risk")
-    if request.args.get("top_n") is not None:
-        top_n=int(request.args.get("top_n"))
-    else :
-        top_n=5
-    load_cache=bool(request.args.get("load_cache"))
-
+    if request.method == 'GET':
+      mf_category=request.args.get("mf_category")
+      mf_sub_category=request.args.get("mf_sub_category")
+      risk=request.args.get("risk")
+      if request.args.get("top_n") is not None:
+          top_n=int(request.args.get("top_n"))
+      else :
+          top_n=5
+      load_cache=bool(request.args.get("load_cache"))
+    if request.method == 'POST':
+      data = request.get_json()
+      mf_category=data["mf_category"]
+      mf_sub_category=data["mf_sub_category"]
+      risk=data["risk"]
+      top_n=data["top_n"]
+      load_cache=data["load_cache"]
+      
     print(mf_category,mf_sub_category,risk,top_n,load_cache)
 
     mf_popular=mf_popularity()
-    return mf_popular.performance_based_recommendation(mf_category)
+    return mf_popular.popularity_based_recommendation(mf_category,mf_sub_category,risk,top_n,load_cache)
 
 
 @app.route('/user_score', methods=['POST'])
