@@ -12,7 +12,7 @@ warnings.filterwarnings("ignore")
 class mf_performance():
 
     def __init__(self):
-        self.mf_df=pd.read_pickle("PredictPlus\predict-plus-recommend\mf_data_popular.pkl.bz2",compression="bz2")
+        self.mf_df=pd.read_pickle("mf_data_popular.pkl.bz2",compression="bz2")
         self.mf = Mftool()
         self.top_equity=None
         self.top_debt=None
@@ -52,7 +52,7 @@ class mf_performance():
             result=self.mutual_fund_performance(mf_category,mf_sub_category,risk,top_n,load_cache)
             return self.get_response(result)
         except Exception as ex:
-            return self.get_exception_response("Error occured, please try again. Exception-"+ex)                        
+            return self.get_exception_response("Error occured, please try again. Exception-"+str(ex))                        
     
     def get_mf_risk(self,scheme_code):
         mf_risk_score= self.mf_df[self.mf_df["scheme_name"].str.lower().str.contains(str(scheme_code).lower(),False)]["Risk"].to_list()
