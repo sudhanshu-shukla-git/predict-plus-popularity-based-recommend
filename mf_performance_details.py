@@ -233,7 +233,7 @@ class mf_performance():
         else:
             return pd.DataFrame(self.top_other[mf_sub_category])
 
-    def get_mf_details(self,scheme_name,mf_category=None,mf_sub_category=None,risk=None,load_cache=True):
+    def get_mf_details(self,scheme_name,mf_category=None,mf_sub_category=None,risk=None,top_n=None,load_cache=True):
         selected_mf=None
         selected_ratio=-1
         result=pd.DataFrame(columns=['scheme_name', 'benchmark', 'latest NAV- Regular', 'latest NAV- Direct',\
@@ -241,7 +241,7 @@ class mf_performance():
        '3-Year Return(%)- Regular', '3-Year Return(%)- Direct',\
        '5-Year Return(%)- Regular', '5-Year Return(%)- Direct'])
         if self.mf_perform_data is None:
-            self.mf_perform_data=self.mutual_fund_performance(mf_category,mf_sub_category,risk,load_cache)
+            self.mf_perform_data=self.mutual_fund_performance(mf_category,mf_sub_category,risk,top_n,load_cache)
         
         for mf in self.mf_perform_data["scheme_name"]:
             
