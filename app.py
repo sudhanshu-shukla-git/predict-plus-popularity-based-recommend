@@ -35,7 +35,7 @@ def performace_based_recommendation():
         in: query
         type: number
         required: false
-		default: None
+		default: 5
 	  - name: load_cache
         in: query
         type: boolean
