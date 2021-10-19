@@ -29,12 +29,12 @@
 > ```
 
 
-### Popularity Based
+### Content Based
 
 > #### https://predict-plus-recommender.herokuapp.com/content_based
 > 
 > #### Sample Request : https://predict-plus-recommender.herokuapp.com/content_based
-> #### Body:
+> #### Sample Body:
 > ``` json
 > [{"annual_inc":24000.0,"age":56,"default":0,"loan":0,"housing":0,"amount":16153,"tenure_yr":13,"home_ownership":"RENT","marital":"married","education":"basic.4y","risk":"Moderately High","job":"Others","mf_pref":"Debt Scheme","mf_sub_pref":"Medium to Long Duration","loan_status":"Fully Paid"}]
 > ```
@@ -44,4 +44,48 @@
 > 
 > ```json
 > [{"1-Year Return(%)- Direct":"10.57","1-Year Return(%)- Regular":"10.10","3-Year Return(%)- Direct":"2.60","3-Year Return(%)- Regular":"1.89","5-Year Return(%)- Direct":"3.55","5-Year Return(%)- Regular":"2.81","benchmark":"CRISIL Medium to Long Term Debt Index","latest NAV- Direct":"59.3519","latest NAV- Regular":"55.2060","risk":"Low to Moderate","scheme_name":"UTI Bond Fund"},{"1-Year Return(%)- Direct":"22.47","1-Year Return(%)- Regular":"21.53","3-Year Return(%)- Direct":"-4.88","3-Year Return(%)- Regular":"-5.70","5-Year Return(%)- Direct":"-0.19","5-Year Return(%)- Regular":"-1.16","benchmark":"CRISIL Short Term Credit Risk Index","latest NAV- Direct":"14.8824","latest NAV- Regular":"13.5319","risk":"Moderately High","scheme_name":"UTI Credit Risk Fund"},{"1-Year Return(%)- Direct":"22.47","1-Year Return(%)- Regular":"21.53","3-Year Return(%)- Direct":"-4.88","3-Year Return(%)- Regular":"-5.70","5-Year Return(%)- Direct":"-0.19","5-Year Return(%)- Regular":"-1.16","benchmark":"CRISIL Short Term Credit Risk Index","latest NAV- Direct":"14.8824","latest NAV- Regular":"13.5319","risk":"Moderately High","scheme_name":"UTI Credit Risk Fund"},{"1-Year Return(%)- Direct":"22.47","1-Year Return(%)- Regular":"21.53","3-Year Return(%)- Direct":"-4.88","3-Year Return(%)- Regular":"-5.70","5-Year Return(%)- Direct":"-0.19","5-Year Return(%)- Regular":"-1.16","benchmark":"CRISIL Short Term Credit Risk Index","latest NAV- Direct":"14.8824","latest NAV- Regular":"13.5319","risk":"Moderately High","scheme_name":"UTI Credit Risk Fund"},{"1-Year Return(%)- Direct":"59.90","1-Year Return(%)- Regular":"58.28","3-Year Return(%)- Direct":"24.03","3-Year Return(%)- Regular":"22.62","5-Year Return(%)- Direct":"14.82","5-Year Return(%)- Regular":"13.49","benchmark":"S&P BSE 250 Large MidCap Total Return Index","latest NAV- Direct":"63.0200","latest NAV- Regular":"57.1100","risk":"Low to Moderate","scheme_name":"BOI AXA Large & Mid Cap Equity Fund"}]
+> ```
+
+
+### Collboration Based
+
+> #### https://predict-plus-recommender.herokuapp.com/collab_based
+> 
+> #### Sample Request : https://predict-plus-recommender.herokuapp.com/collab_based
+> #### Sample Body:
+> ``` json
+> {"mf_list": [148627, 148629]}
+> ```
+> #### Method: POST
+> #### Allowed Values : 
+> #### Sample Result: 
+> 
+> ```json
+> [{"1-Year Return(%)- Direct":"10.57","1-Year Return(%)- Regular":"10.10","3-Year Return(%)- Direct":"2.60","3-Year Return(%)- Regular":"1.89","5-Year Return(%)- Direct":"3.55","5-Year Return(%)- Regular":"2.81","benchmark":"CRISIL Medium to Long Term Debt Index","latest NAV- Direct":"59.3519","latest NAV- Regular":"55.2060","risk":"Low to Moderate","scheme_name":"UTI Bond Fund"},{"1-Year Return(%)- Direct":"22.47","1-Year Return(%)- Regular":"21.53","3-Year Return(%)- Direct":"-4.88","3-Year Return(%)- Regular":"-5.70","5-Year Return(%)- Direct":"-0.19","5-Year Return(%)- Regular":"-1.16","benchmark":"CRISIL Short Term Credit Risk Index","latest NAV- Direct":"14.8824","latest NAV- Regular":"13.5319","risk":"Moderately High","scheme_name":"UTI Credit Risk Fund"},{"1-Year Return(%)- Direct":"22.47","1-Year Return(%)- Regular":"21.53","3-Year Return(%)- Direct":"-4.88","3-Year Return(%)- Regular":"-5.70","5-Year Return(%)- Direct":"-0.19","5-Year Return(%)- Regular":"-1.16","benchmark":"CRISIL Short Term Credit Risk Index","latest NAV- Direct":"14.8824","latest NAV- Regular":"13.5319","risk":"Moderately High","scheme_name":"UTI Credit Risk Fund"},{"1-Year Return(%)- Direct":"22.47","1-Year Return(%)- Regular":"21.53","3-Year Return(%)- Direct":"-4.88","3-Year Return(%)- Regular":"-5.70","5-Year Return(%)- Direct":"-0.19","5-Year Return(%)- Regular":"-1.16","benchmark":"CRISIL Short Term Credit Risk Index","latest NAV- Direct":"14.8824","latest NAV- Regular":"13.5319","risk":"Moderately High","scheme_name":"UTI Credit Risk Fund"},{"1-Year Return(%)- Direct":"59.90","1-Year Return(%)- Regular":"58.28","3-Year Return(%)- Direct":"24.03","3-Year Return(%)- Regular":"22.62","5-Year Return(%)- Direct":"14.82","5-Year Return(%)- Regular":"13.49","benchmark":"S&P BSE 250 Large MidCap Total Return Index","latest NAV- Direct":"63.0200","latest NAV- Regular":"57.1100","risk":"Low to Moderate","scheme_name":"BOI AXA Large & Mid Cap Equity Fund"}]
+> ```
+
+
+
+### User Score
+
+> #### https://predict-plus-recommender.herokuapp.com/user_score
+> 
+> #### Sample Request : https://predict-plus-recommender.herokuapp.com/user_score
+> #### Sample Body:
+> ``` json
+> [{"member_id":89243,"last_payment_date":"2008-01-01","first_loan_start_date":"1988-11-01","open_acc":17,"loan_payment_till_date":100,"total_loan":650,"account_balance":2932704.5,"mf_details":"[{\"mutual_fund_id\":121145,\"mutual_fund_amount\":6310,\"months_since_default\":22,\"mutual_fund_return\":1243070.0,\"mutual_fund_held_since\":14,\"mutual_fund_risk\":\"Moderate\",\"mutual_fund_category\":\"Others\"},{\"mutual_fund_id\":120391,\"mutual_fund_amount\":12790,\"months_since_default\":22,\"mutual_fund_return\":121505.0,\"mutual_fund_held_since\":17,\"mutual_fund_risk\":\"Moderate\",\"mutual_fund_category\":\"Debt Scheme\"},{\"mutual_fund_id\":129736,\"mutual_fund_amount\":13966,\"months_since_default\":22,\"mutual_fund_return\":11731.44,\"mutual_fund_held_since\":16,\"mutual_fund_risk\":\"Moderate\",\"mutual_fund_category\":\"Others\"},{\"mutual_fund_id\":128989,\"mutual_fund_amount\":12503,\"months_since_default\":22,\"mutual_fund_return\":1762923.0,\"mutual_fund_held_since\":10,\"mutual_fund_risk\":\"Moderate\",\"mutual_fund_category\":\"Others\"},{\"mutual_fund_id\":147866,\"mutual_fund_amount\":17539,\"months_since_default\":22,\"mutual_fund_return\":1701283.0,\"mutual_fund_held_since\":12,\"mutual_fund_risk\":\"Moderate\",\"mutual_fund_category\":\"Others\"},{\"mutual_fund_id\":148266,\"mutual_fund_amount\":19310,\"months_since_default\":22,\"mutual_fund_return\":1255150.0,\"mutual_fund_held_since\":8,\"mutual_fund_risk\":\"Moderate\",\"mutual_fund_category\":\"Hybrid Scheme\"},{\"mutual_fund_id\":129330,\"mutual_fund_amount\":4278,\"months_since_default\":22,\"mutual_fund_return\":551862.0,\"mutual_fund_held_since\":16,\"mutual_fund_risk\":\"Moderate\",\"mutual_fund_category\":\"Others\"},{\"mutual_fund_id\":146609,\"mutual_fund_amount\":11551,\"months_since_default\":22,\"mutual_fund_return\":11551.0,\"mutual_fund_held_since\":13,\"mutual_fund_risk\":\"Moderate\",\"mutual_fund_category\":\"Others\"},{\"mutual_fund_id\":126399,\"mutual_fund_amount\":6300,\"months_since_default\":22,\"mutual_fund_return\":5859.0,\"mutual_fund_held_since\":7,\"mutual_fund_risk\":\"Moderate\",\"mutual_fund_category\":\"Others\"},{\"mutual_fund_id\":128924,\"mutual_fund_amount\":15075,\"months_since_default\":22,\"mutual_fund_return\":1100475.0,\"mutual_fund_held_since\":9,\"mutual_fund_risk\":\"Moderate\",\"mutual_fund_category\":\"Others\"},{\"mutual_fund_id\":144337,\"mutual_fund_amount\":13875,\"months_since_default\":22,\"mutual_fund_return\":3898875.0,\"mutual_fund_held_since\":14,\"mutual_fund_risk\":\"Moderate\",\"mutual_fund_category\":\"Debt Scheme\"},{\"mutual_fund_id\":125328,\"mutual_fund_amount\":10910,\"months_since_default\":22,\"mutual_fund_return\":9600.8,\"mutual_fund_held_since\":12,\"mutual_fund_risk\":\"Moderate\",\"mutual_fund_category\":\"Others\"},{\"mutual_fund_id\":146595,\"mutual_fund_amount\":3192,\"months_since_default\":22,\"mutual_fund_return\":20748.0,\"mutual_fund_held_since\":11,\"mutual_fund_risk\":\"Moderate\",\"mutual_fund_category\":\"Others\"},{\"mutual_fund_id\":107525,\"mutual_fund_amount\":19538,\"months_since_default\":22,\"mutual_fund_return\":18561.1,\"mutual_fund_held_since\":5,\"mutual_fund_risk\":\"Moderate\",\"mutual_fund_category\":\"Others\"},{\"mutual_fund_id\":143433,\"mutual_fund_amount\":14459,\"months_since_default\":2,\"mutual_fund_return\":2212227.0,\"mutual_fund_held_since\":1,\"mutual_fund_risk\":\"Moderate\",\"mutual_fund_category\":\"Others\"},{\"mutual_fund_id\":118318,\"mutual_fund_amount\":16057,\"months_since_default\":22,\"mutual_fund_return\":15254.15,\"mutual_fund_held_since\":5,\"mutual_fund_risk\":\"Moderate\",\"mutual_fund_category\":\"Debt Scheme\"}]"}]
+> ```
+> #### Method: POST
+> #### Allowed Values : 
+> #### Sample Result: 
+> 
+> ```json
+> {
+>  "improve": [
+>    "Its good to invest the mutual funds for a longer period to get the power of compound interest",
+>    "Try to invest for more time and more funds, to get higher returns using the power of compound interest"
+>  ],
+>  "max_score": "700",
+>  "score": 266
+> }
 > ```
