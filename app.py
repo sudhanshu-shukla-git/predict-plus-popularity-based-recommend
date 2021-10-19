@@ -1,6 +1,7 @@
 from mf_performance_details import mf_performance
 from mf_popularity_details import mf_popularity
 from user_content_based_mf import content_based_recommend
+from user_collab_based_mf import collab_based_recommend
 from user_scoring_model import user_score
 from flask import Flask,jsonify,request
 # from flasgger import Swagger
@@ -58,6 +59,14 @@ def content_based_mf_recommend():
   content_recommend=content_based_recommend()
   return content_recommend.content_based_recommendation(data)
 
+@app.route('/collab_based', methods=['POST'])
+def collab_based_mf_recommend():
+  data = request.get_json()
+  print(data)
+  collab_based=collab_based_recommend()
+  mf_list=data["mf_list"]
+  print(mf_list)
+  return collab_based.get_collaboration_based_funds(mf_list)
 
 if __name__=='__main__':    
     app.run(host='0.0.0.0',port=8000,debug=False)

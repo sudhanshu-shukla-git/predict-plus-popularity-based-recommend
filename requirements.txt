@@ -9,5 +9,4 @@ flask
 flasgger
 sklearn
 mftool
-keras
 tensorflow-cpu

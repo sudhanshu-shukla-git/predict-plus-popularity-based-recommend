@@ -1,6 +1,6 @@
-
+import tensorflow as tf
 import pandas as pd
-from keras.models import load_model
+from tensorflow.keras.models import load_model
 import pickle
 from mf_performance_details import mf_performance
 from sklearn.preprocessing import MinMaxScaler
@@ -11,8 +11,8 @@ class content_based_recommend():
 
     def __init__(self):
         self.MODEL_NAME="models\content_based_recommendar_model.h5"
-        self.MF_OUTPUT_MAPPING="pickle_data\mf_output_mapping.pkl.bz2"
-        self.MF_FILE_NAME="pickle_data\mf_data_popular.pkl.bz2"
+        self.MF_OUTPUT_MAPPING="pickle_data/mf_output_mapping.pkl.bz2"
+        self.MF_FILE_NAME="pickle_data/mf_data_popular.pkl.bz2"
         self.mf_perf=mf_performance()
 
     def load_dict(self,file_name):
@@ -75,9 +75,9 @@ class content_based_recommend():
     def get_formatted_input(self,user_data):
         print("get_formatted_input")
         #user_data=pd.read_json("../user_data.json")
-        COLUMN_REFERNCE_FILE_NAME="pickle_data\column_reference_for_nn.pkl"
-        NN_DATAFRANE_COLUMNS = "pickle_data\\final_column_list_for_nn.pkl"
-        CATEGORY_WISE_COLUMNS= "pickle_data\column_list_for_nn.pkl"
+        COLUMN_REFERNCE_FILE_NAME="pickle_data/column_reference_for_nn.pkl"
+        NN_DATAFRANE_COLUMNS = "pickle_data/final_column_list_for_nn.pkl"
+        CATEGORY_WISE_COLUMNS= "pickle_data/column_list_for_nn.pkl"
         
         column_list =self.load_dict(CATEGORY_WISE_COLUMNS)
         nn_column_list =self.load_dict(NN_DATAFRANE_COLUMNS)

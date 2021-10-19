@@ -1,7 +1,7 @@
 
-import keras
+import tensorflow as tf
 import pandas as pd
-from keras.models import load_model
+from tensorflow.keras.models import load_model
 import pickle
 from sklearn.preprocessing import MinMaxScaler
 from flask import jsonify
@@ -70,7 +70,7 @@ class user_score():
         with open("models\model_user_score.json", 'r') as json_file:
             json_savedModel= json_file.read()
         #load the model architecture 
-        model = keras.models.model_from_json(json_savedModel)    
+        model = tf.keras.models.model_from_json(json_savedModel)    
         model.load_weights("models\Weights-048--21.52199.hdf5") # load it
         model.compile(loss='mean_absolute_error', optimizer='adam', metrics=['mean_absolute_error'])    
         
@@ -82,7 +82,7 @@ class user_score():
         model = load_model(IMPROVEMENT_MODEL, compile = False)        
         predictions = model.predict(user_data)
         top_2=(-predictions.ravel()).argsort()[:2]
-        improvements=pd.read_pickle("pickle_data\improvement_mapping.pkl")
+        improvements=pd.read_pickle("pickle_data/improvement_mapping.pkl")
         indexs=improvements[(improvements["index"].isin(top_2))]["improvement"].to_list()
         improve_df=pd.DataFrame(self.improvement_dict)
         improve_text=improve_df[improve_df["improvement"].isin(indexs)]["text"].to_list()

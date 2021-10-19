@@ -14,7 +14,7 @@ warnings.filterwarnings("ignore")
 class mf_popularity():
 
     def __init__(self):
-        self.mf_df=pd.read_pickle("pickle_data\mf_data_popular.pkl.bz2",compression="bz2")
+        self.mf_df=pd.read_pickle("pickle_data/mf_data_popular.pkl.bz2",compression="bz2")
         self.mf_perf=mf_performance()
         
     
@@ -37,7 +37,7 @@ class mf_popularity():
     
         
     def get_popularity_based_funds(self,mf_category=None,mf_sub_category=None,risk=None,top_n=5,load_cache=True,user_mf_json=None):
-        FILE_NAME="pickle_data\mf_data_popular.pkl.bz2"
+        FILE_NAME="pickle_data/mf_data_popular.pkl.bz2"
         
         if load_cache==True:
             if self.mf_df is None:
