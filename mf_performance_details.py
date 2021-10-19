@@ -12,7 +12,7 @@ warnings.filterwarnings("ignore")
 class mf_performance():
 
     def __init__(self):
-        self.mf_df=pd.read_pickle("mf_data_popular.pkl.bz2",compression="bz2")
+        self.mf_df=pd.read_pickle("pickle_data\mf_data_popular.pkl.bz2",compression="bz2")
         self.mf = Mftool()
         self.top_equity=None
         self.top_debt=None
@@ -60,7 +60,7 @@ class mf_performance():
     
 
     def get_mf_risk(self,scheme_name):
-        mf_df=pd.read_pickle("fund_risk_score.pkl.bz2")
+        mf_df=pd.read_pickle("pickle_data\fund_risk_score.pkl.bz2")
         risk_list=['Low to Moderate', 'Moderate', 'Moderately High', 'Very High', 'High', 'Low']  
         mf_risk_score= mf_df[mf_df["fund_name"].str.lower().str.strip()==str(scheme_name).strip().lower()]["risk"].head(1).to_list()
         
@@ -85,7 +85,7 @@ class mf_performance():
             elif mf_category =="Other Scheme":
                 top_funds=self.get_soln_performance_based_funds(mf_sub_category,load_cache)
             else:
-                ALL_MF_FILE_NAME="all_schemes.pkl.bz2"
+                ALL_MF_FILE_NAME="pickle_data\all_schemes.pkl.bz2"
                 if load_cache:
                     if self.top_all is None:                        
                         if exists(ALL_MF_FILE_NAME):
@@ -110,7 +110,7 @@ class mf_performance():
             
 
     def get_equity_performance_based_funds(self,mf_sub_category=None,load_cache=True):
-        FILE_NAME="top_equity.pkl"
+        FILE_NAME="pickle_data\top_equity.pkl"
         
         if self.top_equity is None:
             try:
@@ -135,7 +135,7 @@ class mf_performance():
             return pd.DataFrame(self.top_equity[mf_sub_category])
 
     def get_debt_performance_based_funds(self,mf_sub_category=None,load_cache=True):
-        FILE_NAME="top_debt.pkl"
+        FILE_NAME="pickle_data\top_debt.pkl"
         
         if self.top_debt is None:
             try:
@@ -159,7 +159,7 @@ class mf_performance():
 
 
     def get_hybrid_performance_based_funds(self,mf_sub_category=None,load_cache=True):
-        FILE_NAME="top_hybrid.pkl"
+        FILE_NAME="pickle_data\top_hybrid.pkl"
         
         if self.top_hybrid is None:
             try:
@@ -187,7 +187,7 @@ class mf_performance():
 
 
     def get_soln_performance_based_funds(self,mf_sub_category=None,load_cache=True):
-        FILE_NAME="top_soln.pkl"
+        FILE_NAME="pickle_data\top_soln.pkl"
         
         if self.top_soln is None:
             try: 
@@ -213,7 +213,7 @@ class mf_performance():
 
 
     def get_other_performance_based_funds(self,mf_sub_category=None,load_cache=True):
-        FILE_NAME="top_other.pkl"
+        FILE_NAME="pickle_data\top_other.pkl"
         
         if self.top_other is None:
             try:

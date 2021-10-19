@@ -9,3 +9,4 @@ flask
 flasgger
 sklearn
 mftool
+tensorflow

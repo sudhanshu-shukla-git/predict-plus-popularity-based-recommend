@@ -1,10 +1,11 @@
 from mf_performance_details import mf_performance
 from mf_popularity_details import mf_popularity
+from user_scoring_model import user_score
 from flask import Flask,jsonify,request
-from flasgger import Swagger
+# from flasgger import Swagger
 
 app=Flask(__name__)
-Swagger(app)
+# Swagger(app)
 
 
 @app.route('/')
@@ -13,40 +14,7 @@ def welcome():
 
 @app.route('/performance_based',methods=["Get"])
 def performace_based_recommendation():
-    """Performance Based Recommendation
-       
-    ---
-    parameters:  
-      - name: mf_category
-        in: query
-        type: string
-        required: false
-		default: None
-	  - name: mf_sub_category
-        in: query
-        type: string
-        required: false
-		default: None
-	  - name: risk
-        in: query
-        type: string
-        required: false
-		default: None
-      - name: top_n
-        in: query
-        type: number
-        required: false
-		default: 5
-	  - name: load_cache
-        in: query
-        type: boolean
-        required: false
-		default: True
-    responses:
-        200:
-            description: The output values
-        
-    """
+    
     mf_category=request.args.get("mf_category")
     mf_sub_category=request.args.get("mf_sub_category")
     risk=request.args.get("risk")
@@ -58,40 +26,7 @@ def performace_based_recommendation():
 
 @app.route('/popularity_based',methods=["GET"])
 def popularity_based_recommendation():
-    """Popularity Based Recommendation
-       
-    ---
-    parameters:  
-      - name: mf_category
-        in: query
-        type: string
-        required: false
-		default: None
-	  - name: mf_sub_category
-        in: query
-        type: string
-        required: false
-		default: None
-	  - name: risk
-        in: query
-        type: string
-        required: false
-		default: None
-      - name: top_n
-        in: query
-        type: number
-        required: false
-		default: 5
-	  - name: load_cache
-        in: query
-        type: boolean
-        required: false
-		default: True
-    responses:
-        200:
-            description: The output values
-        
-    """
+    
     mf_category=request.args.get("mf_category")
     mf_sub_category=request.args.get("mf_sub_category")
     risk=request.args.get("risk")
@@ -106,5 +41,11 @@ def popularity_based_recommendation():
     mf_popular=mf_popularity()
     return mf_popular.performance_based_recommendation(mf_category)
 
+@app.route('/user_score', methods=['POST'])
+def get_user_score():
+  data = request.get_json()
+  
+  score=user_score()
+  return score.get_scoring_result(data)
 if __name__=='__main__':    
     app.run(host='0.0.0.0',port=8000,debug=False)
