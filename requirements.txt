@@ -9,4 +9,4 @@ flask
 flasgger
 sklearn
 mftool
-tensorflow==1.15
+tflite==2.6.0
