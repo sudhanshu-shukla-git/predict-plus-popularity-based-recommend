@@ -50,9 +50,8 @@ def performace_based_recommendation():
     mf_sub_category=request.args.get("mf_sub_category")
     risk=request.args.get("risk")
     top_n=int(request.args.get("top_n"))
-    load_cache=request.args.get("load_cache")
-
-    print(mf_category,mf_sub_category,risk,top_n,load_cache)
+    load_cache=bool(request.args.get("load_cache"))
+    
     mf_perform=mf_performance()
     return mf_perform.performance_based_recommendation(mf_category,mf_sub_category,risk,top_n,load_cache)
 
