@@ -47,7 +47,7 @@ class collab_based_recommend():
             USER_MF_DATA="pickle_data/user_mf_buy_details.pkl.bz2"
             if load_cache:
                 user_df=pd.read_pickle(USER_MF_DATA)
-                user_df=user_df.sample(frac=0.3)
+                #user_df=user_df.sample(frac=0.3)
             else:
                 user_df=pd.read_json(user_data_json)
                 user_df=user_df[["member_id","mf_id"]].drop_duplicates()
